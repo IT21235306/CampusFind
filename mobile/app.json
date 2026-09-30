@@ -18,7 +18,8 @@
       "predictiveBackGestureEnabled": false,
       "package": "com.campusfind.sliit",
       "permissions": [
-        "READ_MEDIA_IMAGES"
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -33,6 +34,12 @@
         }
       ],
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0d81a059-4770-4039-a83f-b5843b72b2f0"
+      }
+    },
+    "owner": "chamika12345s-team"
   }
 }
