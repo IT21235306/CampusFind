@@ -1,4 +1,4 @@
-export type User = { id: string; name: string; email: string };
+export type User = { id: string; name: string; email: string; role?: 'member' | 'admin'; avatarUrl?: string };
 export type Item = { _id: string; title: string; description: string; category: string; foundLocation: string; foundDate: string; imageUrl: string; status: 'Available' | 'Returned'; postedBy: { _id: string; name: string } | string; createdAt: string };
 export type Claim = { _id: string; itemId: Item | string; claimantId: { _id: string; name: string } | string; identifyingDetails: string; status: 'Pending' | 'Approved' | 'Rejected' | 'Cancelled'; createdAt: string };
 export const API_URL = (process.env.EXPO_PUBLIC_API_URL || '').replace(/\/$/, '');

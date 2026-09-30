@@ -12,10 +12,9 @@ export function showAlert(title: string, body?: string, buttons: Action[] = [{ t
   if (listener) listener(message); else queued.push(message);
 }
 export function AlertHost() {
-  const [message, setMessage] = useState<Message | null>(null);
+  const [message, setMessage] = useState<Message | null>(() => queued.shift() || null);
   useEffect(() => {
     listener = setMessage;
-    if (queued.length) setMessage(queued.shift()!);
     return () => { listener = null; };
   }, []);
   function close(action?: Action) {

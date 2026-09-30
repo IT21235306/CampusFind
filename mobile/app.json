@@ -33,7 +33,16 @@
           "photosPermission": "CampusFind needs access to photos so you can add an image of a found item."
         }
       ],
-      "expo-font"
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#155CB6",
+          "image": "./assets/icon.png",
+          "imageWidth": 168,
+          "resizeMode": "contain"
+        }
+      ]
     ],
     "extra": {
       "eas": {
