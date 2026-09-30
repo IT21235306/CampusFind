@@ -1,8 +1,9 @@
 import React from 'react';
-import { ActivityIndicator, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { C, shadow } from './theme';
 import { Item, itemDate, imageUri } from './api';
+import { Photo } from './RemotePhoto';
 
 export function Button({ title, onPress, kind = 'primary', loading = false, disabled = false, icon }: { title: string; onPress: () => void; kind?: 'primary' | 'secondary' | 'ghost' | 'danger'; loading?: boolean; disabled?: boolean; icon?: keyof typeof Ionicons.glyphMap }) {
   return <Pressable accessibilityRole="button" accessibilityLabel={title} accessibilityState={{ disabled: disabled || loading }} disabled={disabled || loading} onPress={onPress} style={({ pressed }) => [styles.button, kind === 'secondary' && styles.secondary, kind === 'ghost' && styles.ghost, kind === 'danger' && styles.danger, (disabled || loading) && { opacity: .5 }, pressed && { opacity: .78 }]}>
@@ -21,7 +22,7 @@ export function Empty({ icon, title, body }: { icon: keyof typeof Ionicons.glyph
 export function StatusPill({ status }: { status: string }) { const positive = status === 'Available' || status === 'Approved'; const negative = status === 'Rejected'; return <View style={[styles.pill, { backgroundColor: positive ? C.successPale : negative ? C.dangerPale : C.orangePale }]}><Text style={{ color: positive ? C.success : negative ? C.danger : C.orangeText, fontSize: 12, fontWeight: '700' }}>{status}</Text></View>; }
 export function ItemCard({ item, onPress }: { item: Item; onPress: () => void }) {
   return <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={`View ${item.title}, found at ${item.foundLocation}`} style={({ pressed }) => [styles.card, pressed && { opacity: .85 }]}>
-    {item.imageUrl ? <Image source={{ uri: imageUri(item.imageUrl) }} style={styles.cardImage} /> : <View style={[styles.cardImage, styles.imageFallback]}><Ionicons name="cube-outline" size={32} color={C.blue} /></View>}
+    {item.imageUrl ? <Photo uri={imageUri(item.imageUrl)} style={styles.cardImage} /> : <View style={[styles.cardImage, styles.imageFallback]}><Ionicons name="cube-outline" size={32} color={C.blue} /></View>}
     <View style={{ flex: 1, padding: 14, justifyContent: 'space-between' }}><View><Text numberOfLines={2} style={styles.cardTitle}>{item.title}</Text><Text style={styles.cardCategory}>{item.category}</Text></View><View><View style={styles.metaRow}><Ionicons name="location-outline" size={15} color={C.muted} /><Text numberOfLines={1} style={styles.metaText}>{item.foundLocation}</Text></View><Text style={styles.date}>{itemDate(item.foundDate)}</Text></View></View>
   </Pressable>;
 }

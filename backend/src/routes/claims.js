@@ -24,6 +24,7 @@ router.post('/', asyncRoute(async (req, res) => {
   const item = await Item.findById(objectId(input.itemId));
   if (!item) fail(404, 'Item not found.');
   if (isOwner(item, req.userId)) fail(403, 'You cannot claim your own item.');
+  if (item.isHidden) fail(404, 'Item not found.');
   if (item.status !== 'Available') fail(409, 'This item has already been returned.');
   if (await Claim.exists({ itemId: item._id, claimantId: req.userId, status: 'Pending' })) fail(409, 'You already have a pending claim for this item.');
   const claim = await Claim.create({ itemId: item._id, claimantId: req.userId, identifyingDetails: input.identifyingDetails });
