@@ -10,6 +10,7 @@
     "start": "node src/local.js",
     "seed": "node scripts/seed.js",
     "seed:images": "node scripts/seed-images.js",
+    "grant:admin": "node scripts/grant-admin.js",
     "check": "node --check src/index.js && node --check src/routes/items.js && node --check src/routes/claims.js && node --check src/storage.js"
   },
   "keywords": [],

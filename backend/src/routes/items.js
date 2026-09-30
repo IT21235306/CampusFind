@@ -21,7 +21,7 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 3 *
 router.get('/', asyncRoute(async (req, res) => {
   const filter = {};
   if (req.query.mine === 'true') filter.postedBy = req.userId;
-  else if (req.query.status !== 'all') filter.status = 'Available';
+  else { filter.isHidden = { $ne: true }; if (req.query.status !== 'all') filter.status = 'Available'; }
   if (req.query.category && categories.includes(req.query.category)) filter.category = req.query.category;
   if (req.query.search) { const search = String(req.query.search).slice(0, 80).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); filter.$or = [{ title: { $regex: search, $options: 'i' } }, { foundLocation: { $regex: search, $options: 'i' } }]; }
   const items = await Item.find(filter).sort({ createdAt: -1 }).limit(100).populate('postedBy', 'name');
@@ -34,7 +34,7 @@ router.post('/', asyncRoute(async (req, res) => {
 }));
 router.get('/:id', asyncRoute(async (req, res) => {
   const item = await Item.findById(objectId(req.params.id)).populate('postedBy', 'name');
-  if (!item) fail(404, 'Item not found.'); res.json({ item: present(item, req) });
+  if (!item || (item.isHidden && String(item.postedBy?._id) !== String(req.userId) && req.user.role !== 'admin')) fail(404, 'Item not found.'); res.json({ item: present(item, req) });
 }));
 router.patch('/:id', asyncRoute(async (req, res) => {
   const item = await Item.findById(objectId(req.params.id));

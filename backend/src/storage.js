@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const { Readable } = require('stream');
 function bucket() { return new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'itemImages' }); }
+function imageType(bytes) {
+  return bytes?.[0] === 0xff && bytes[1] === 0xd8 ? 'image/jpeg' : bytes?.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])) ? 'image/png' : bytes?.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP' ? 'image/webp' : '';
+}
 function saveImage(buffer, filename, mimeType) {
   return new Promise((resolve, reject) => {
     const stream = bucket().openUploadStream(filename, { metadata: { contentType: mimeType } });
@@ -20,4 +23,4 @@ async function serveImage(req, res, next) {
     bucket().openDownloadStream(id).on('error', next).pipe(res);
   } catch (error) { next(error); }
 }
-module.exports = { saveImage, deleteImage, serveImage };
+module.exports = { saveImage, deleteImage, serveImage, imageType };

@@ -15,5 +15,6 @@ app.get('/api/images/:id', require('./storage').serveImage);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/items', require('./routes/items'));
 app.use('/api/claims', require('./routes/claims'));
+app.use('/api/admin', require('./routes/admin'));
 app.use((req, res) => res.status(404).json({ error: 'Route not found.' })); app.use(errorHandler);
 module.exports = app;

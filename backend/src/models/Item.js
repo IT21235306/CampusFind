@@ -8,6 +8,7 @@ const schema = new mongoose.Schema({
   imageUrl: { type: String, default: '' },
   imageFileId: { type: mongoose.Schema.Types.ObjectId },
   status: { type: String, enum: ['Available', 'Returned'], default: 'Available' },
+  isHidden: { type: Boolean, default: false },
   postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { timestamps: true });
 schema.index({ status: 1, createdAt: -1 });
