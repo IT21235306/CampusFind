@@ -1,0 +1,31 @@
+{
+  "name": "campusfind-api",
+  "version": "1.0.0",
+  "description": "CampusFind Express API",
+  "main": "src/index.js",
+  "private": true,
+  "engines": { "node": "24.x" },
+  "scripts": {
+    "dev": "node --watch src/local.js",
+    "start": "node src/local.js",
+    "seed": "node scripts/seed.js",
+    "seed:images": "node scripts/seed-images.js",
+    "check": "node --check src/index.js && node --check src/routes/items.js && node --check src/routes/claims.js && node --check src/storage.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.10.3",
+    "multer": "^2.4.0",
+    "zod": "^4.6.5"
+  }
+}
