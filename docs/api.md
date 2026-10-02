@@ -8,6 +8,8 @@ Base path: `/api`. All routes except health, registration, login, and image deli
 | POST | `/auth/register` | Create user and return token |
 | POST | `/auth/login` | Verify password and return token |
 | GET | `/auth/me` | Restore authenticated account |
+| PATCH | `/auth/me` | Update the current user's profile name |
+| POST | `/auth/me/avatar` | Upload or replace a profile photo |
 | GET | `/items` | Search/list items; `mine=true` lists own items |
 | POST | `/items` | Create found item |
 | GET | `/items/:id` | View item details |
@@ -21,5 +23,12 @@ Base path: `/api`. All routes except health, registration, login, and image deli
 | PATCH | `/claims/:id` | Update own pending claim |
 | DELETE | `/claims/:id` | Delete non-approved claim |
 | PATCH | `/claims/:id/status` | Approve, reject, or cancel |
+| GET | `/admin/overview` | Read moderation counts; admin only |
+| GET | `/admin/users` | List users; admin only |
+| PATCH | `/admin/users/:id` | Activate/disable a user or change role; admin only |
+| GET | `/admin/items` | List all items, including hidden items; admin only |
+| PATCH | `/admin/items/:id` | Hide or show an item; admin only |
+| GET | `/admin/claims` | List claims for moderation; admin only |
+| PATCH | `/admin/claims/:id` | Reject a pending claim; admin only |
 
 Errors use `400` invalid input, `401` missing/expired token, `403` forbidden action, `404` missing resource, `409` business-rule conflict, and `500` unexpected server error.
